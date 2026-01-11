@@ -1,6 +1,6 @@
 # Solid Principle
 
-###### S - Single Responsibility Principle
+### S - Single Responsibility Principle
  class have one and only one reason to change.
 ```java
 public class Invoice {
@@ -43,7 +43,7 @@ public clas InvoiceCalculator{
 }
 ```
 
-###### O - Open/Closed Principle
+### O - Open/Closed Principle
  Open for extension but closed for modification.
 ```java
 public class InovoiceDao{
@@ -74,7 +74,7 @@ public class FileInovoiceSaver implements InovoiceSaver{
     }
 }
 ```
-###### L - Liskov Substitution Principle
+### L - Liskov Substitution Principle
 If class A is a subtype of class B, then we should be able to replace B with A without disrupting the behavior of the program.
 class should extend the capability of parent class not narrow it down.
 ```java
@@ -105,7 +105,7 @@ public class ByCycle implements Bike {
     }
 }
 ```
-###### I - Interface Segregation Principle
+### I - Interface Segregation Principle
 
 Interface should be such that, client should not implement methods which they don't use.
 ```java
@@ -156,7 +156,7 @@ class Cleaner implements Dishwasher{
 }
 ```
 
-###### D - Dependency Inversion Principle
+### D - Dependency Inversion Principle
 
 class should depend on interface rather than concrete implementation.
 ```java
