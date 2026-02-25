@@ -5,7 +5,6 @@ import com.example.low_level_design.RateLimiter.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TotenBucket extends RateLimiter {
 
