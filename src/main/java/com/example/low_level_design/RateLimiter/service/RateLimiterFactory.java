@@ -2,7 +2,7 @@ package com.example.low_level_design.RateLimiter.service;
 
 import com.example.low_level_design.RateLimiter.impl.RateLimiter;
 import com.example.low_level_design.RateLimiter.impl.SlidingWindowLog;
-import com.example.low_level_design.RateLimiter.impl.TotenBucket;
+import com.example.low_level_design.RateLimiter.impl.TokenBucket;
 import com.example.low_level_design.RateLimiter.model.RateLimiterConfig;
 import com.example.low_level_design.RateLimiter.model.UserType;
 
@@ -15,7 +15,7 @@ public class RateLimiterFactory {
 
     public RateLimiterFactory(){
         userTypeToRateLimiter= new HashMap<>();
-        userTypeToRateLimiter.put(UserType.NORMAL_USER.name(), new TotenBucket(new RateLimiterConfig(10, 60)));
+        userTypeToRateLimiter.put(UserType.NORMAL_USER.name(), new TokenBucket(new RateLimiterConfig(10, 60)));
         userTypeToRateLimiter.put(UserType.PREMIUM_USER.name(), new SlidingWindowLog(new RateLimiterConfig(100, 60)));
     }
 

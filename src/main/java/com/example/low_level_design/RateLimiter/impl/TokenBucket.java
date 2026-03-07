@@ -6,12 +6,12 @@ import com.example.low_level_design.RateLimiter.model.User;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TotenBucket extends RateLimiter {
+public class TokenBucket extends RateLimiter {
 
     Map<String, Integer> tokens=new HashMap<>();
     Map<String, Integer> lastRefillTime=new HashMap<>();
 
-    public TotenBucket(RateLimiterConfig rateLimiterConfig) {
+    public TokenBucket(RateLimiterConfig rateLimiterConfig) {
         super(rateLimiterConfig);
     }
 

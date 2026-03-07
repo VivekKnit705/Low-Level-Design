@@ -71,16 +71,36 @@ class EconomyVehicaleV2 implements Vehicale {
     }
 }
 interface VehicalFactory {
-    Vehicale createVehicale();
+    Vehicale createVehicaleV1();
+    Vehicale createVehicaleV2();
 }
 class LuxcuryVehical implements VehicalFactory {
-    public Vehicale createVehicale() {
+    public Vehicale createVehicalV1() {
         return new LuxuryVehicaleV1();
+    }
+    public Vehicale createVehicalV2() {
+        return new LuxuryVehicaleV2();
     }
 }
 class EconomyVehical implements VehicalFactory {
-    public Vehicale createVehicale() {
+    public Vehicale createVehicaleV1() {
         return new EconomyVehicaleV1();
     }
+    public Vehicale createVehicalV2() {
+        return new EconomyVehicaleV2();
+    }
 }
+
+
+public class Main{
+    public static void main(String[] args){
+        VehicalFactory luxcuryVehical=new LuxcuryVehical();
+        Vehicle vehicle1=luxcuryVehical.createVehicalV1();
+        vehicale1.milage();
+        Vehicle vehicle2=luxcuryVehical.createVehicalV2();
+        vehicale2.milage();
+    }
+}
+```
+
 
