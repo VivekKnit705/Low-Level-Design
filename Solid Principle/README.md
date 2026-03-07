@@ -32,7 +32,7 @@ public class Invoice {
 }
 ```
 ```java
-public clas InvoiceCalculator{
+public class InvoiceCalculator{
     public double calculateTotal(List<Item> items) {
         double total = 0;
         for (Item item : items) {
@@ -46,7 +46,7 @@ public clas InvoiceCalculator{
 ### O - Open/Closed Principle
  Open for extension but closed for modification.
 ```java
-public class InovoiceDao{
+public class InovoiceDao{   
     Inovoice inovoice;
     public void saveToDataBase(){
         //code to save inovoice to database

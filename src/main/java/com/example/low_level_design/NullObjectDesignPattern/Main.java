@@ -7,9 +7,9 @@ public class Main {
         Vehicle car=vehicalFactory.getVehical("CAR");
         Vehicle truck=vehicalFactory.getVehical("TRUCK");
 
-        System.out.println("Bike Milage:"+bike.getMilage()+" Bike Fuel Capacity: "+bike.getFuelCapacity());
-        System.out.println("Car Milage:"+car.getMilage()+" Car Fuel Capacity: "+car.getFuelCapacity());
-        System.out.println("Truck Milage:"+truck.getMilage()+" Truck Fuel Capacity: "+truck.getFuelCapacity());
+        System.out.println("Bike Milage:"+bike.getMillage()+" Bike Fuel Capacity: "+bike.getFuelCapacity());
+        System.out.println("Car Milage:"+car.getMillage()+" Car Fuel Capacity: "+car.getFuelCapacity());
+        System.out.println("Truck Milage:"+truck.getMillage()+" Truck Fuel Capacity: "+truck.getFuelCapacity());
 
     }
 }
