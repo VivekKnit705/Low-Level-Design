@@ -3,74 +3,66 @@
 ### S - Single Responsibility Principle
  class have one and only one reason to change.
 ```java
-public class Invoice {
-    private List<Item> items;
-    private Customer customer;
-
-    public void addItem(Item item) {
-        items.add(item);
+class UserService {
+    void saveUser(User user) {
+        // save to database
     }
 
-    public double calculateTotal() {
-        double total = 0;
-        for (Item item : items) {
-            total += item.getPrice();
-        }
-        return total;
+    void sendEmail(User user) {
+        // send welcome email
+    }
+
+    void generateReport() {
+        // create user report
     }
 }
 ```
 above class has two responsibilities: managing items and calculating the total. To adhere to SRP, we can separate these responsibilities into different classes.
 ```java
-public class Invoice {
-    private List<Item> items;
-    private Customer customer;
-
-    public void addItem(Item item) {
-        items.add(item);
-    }
+class UserRepository {
+    void save(User user) {}
 }
-```
-```java
-public class InvoiceCalculator{
-    public double calculateTotal(List<Item> items) {
-        double total = 0;
-        for (Item item : items) {
-            total += item.getPrice();
-        }
-        return total;
-    }
+
+class EmailService {
+    void sendWelcomeEmail(User user) {}
+}
+
+class ReportService {
+    void generateUserReport() {}
 }
 ```
 
 ### O - Open/Closed Principle
  Open for extension but closed for modification.
 ```java
-public class InovoiceDao{   
-    Inovoice inovoice;
-    public void saveToDataBase(){
-        //code to save inovoice to database
-    }
-    public void saveToFile(){
-        //code to save inovoice to file
+class DiscountCalculator {
+    double calculate(String customerType, double amount) {
+
+        if(customerType.equals("Regular"))
+            return amount * 0.05;
+
+        if(customerType.equals("Premium"))
+            return amount * 0.10;
+
+        return 0;
     }
 }
 ```
 above class violates OCP because if we want to add a new way to save the invoice, we have to modify the existing class. To adhere to OCP, we can use interfaces and inheritance.
 ```java
-public interface InovoiceSaver{
-    void save(Inovoice inovoice);
+interface DiscountStrategy {
+    double calculate(double amount);
 }
 
-public class DatabaseInovoiceSaver implements InovoiceSaver{
-    public void save(Inovoice inovoice){
-        //code to save inovoice to database
+class RegularDiscount implements DiscountStrategy {
+    public double calculate(double amount) {
+        return amount * 0.05;
     }
 }
 
-public class FileInovoiceSaver implements InovoiceSaver{
-    public void save(Inovoice inovoice){
-        //code to save inovoice to file
+class PremiumDiscount implements DiscountStrategy {
+    public double calculate(double amount) {
+        return amount * 0.10;
     }
 }
 ```
@@ -78,30 +70,77 @@ public class FileInovoiceSaver implements InovoiceSaver{
 If class A is a subtype of class B, then we should be able to replace B with A without disrupting the behavior of the program.
 class should extend the capability of parent class not narrow it down.
 ```java
-interface Bike {
-    int accelerate;
-    void startEngine();
-    void accelerateSpeed();
-}
-
-public class MotorCycle implements Bike {
-    public void startEngine() {
-        System.out.println("bike started");
-    }
-
-    public void accelerateSpeed() {
-        Bike.accelerate += 10;
-        System.out.println("bike accelerated");
+class Bird {
+    void fly() {
+        System.out.println("Flying");
     }
 }
-public class ByCycle implements Bike {
-    public void startEngine() {
-        System.out.println("bike does not have engine");
+
+class Penguin extends Bird {
+
+    @Override
+    void fly() {
+        throw new UnsupportedOperationException(
+                "Penguins cannot fly");
+    }
+}
+
+public class Main {
+
+    public static void makeBirdFly(Bird bird) {
+        bird.fly();
     }
 
-    public void accelerateSpeed() {
-        Bike.accelerate += 5;
-        System.out.println("bike accelerated");
+    public static void main(String[] args) {
+
+        Bird sparrow = new Bird();
+        Bird penguin = new Penguin();
+
+        makeBirdFly(sparrow);   // Works
+        makeBirdFly(penguin);   // Runtime Exception
+    }
+}
+```
+Correct
+
+```java
+interface Bird {
+}
+
+interface FlyingBird extends Bird {
+    void fly();
+}
+
+class Sparrow implements FlyingBird {
+
+    public void fly() {
+        System.out.println("Flying");
+    }
+}
+
+class Penguin implements Bird {
+
+    void swim() {
+        System.out.println("Swimming");
+    }
+}
+
+public class Main {
+
+    public static void makeBirdFly(FlyingBird bird) {
+        bird.fly();
+    }
+
+    public static void main(String[] args) {
+
+        FlyingBird sparrow = new Sparrow();
+
+        makeBirdFly(sparrow);
+
+        Bird penguin = new Penguin();
+
+        // Cannot call makeBirdFly(penguin)
+        // Compile-time safety
     }
 }
 ```
@@ -109,50 +148,37 @@ public class ByCycle implements Bike {
 
 Interface should be such that, client should not implement methods which they don't use.
 ```java
-interface RestaurantEmployee{
-    cookFood();
-    serveCustomer();
-    washDishes();
+interface Worker {
+    void work();
+    void eat();
 }
 
-class Waiter implements RestaurantEmployee{
-    public void cookFood(){
-        //not applicable
-    }
-    public void serveCustomer(){
-        //code to serve customer
-    }
-    public void washDishes(){
-        //not applicable
+class Robot implements Worker {
+
+    public void work() {}
+
+    public void eat() {
+        throw new UnsupportedOperationException();
     }
 }
 ```
-above Waiter class is forced to implement cookFood and washDishes methods which are not applicable to it. To adhere to ISP, we can split the interface into smaller interfaces.
+A robot doesn't eat.
 ```java
-interface Cook{
-    cookFood();
-}
-interface Server{
-    serveCustomer();
-}
-interface Dishwasher{
-    washDishes();
+iinterface Workable {
+    void work();
 }
 
-class Waiter implements Server{
-    public void serveCustomer(){
-        //code to serve customer
-    }
+interface Eatable {
+    void eat();
 }
-class Chef implements Cook{
-    public void cookFood(){
-        //code to cook food
-    }
+
+class Human implements Workable, Eatable {
+    public void work() {}
+    public void eat() {}
 }
-class Cleaner implements Dishwasher{
-    public void washDishes(){
-        //code to wash dishes
-    }
+
+class Robot implements Workable {
+    public void work() {}
 }
 ```
 
